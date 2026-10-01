@@ -1,0 +1,25 @@
+server:
+  port: 8094
+
+spring:
+  application:
+    name: mcp-notification-server
+
+services:
+  notification-service: ${NOTIFICATION_SERVICE_URL:http://localhost:8086}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{correlationId:-}]"

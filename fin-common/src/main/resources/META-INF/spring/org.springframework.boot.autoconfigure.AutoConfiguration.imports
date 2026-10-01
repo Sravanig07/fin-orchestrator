@@ -1,0 +1,2 @@
+com.finorchestrator.common.config.CommonAutoConfiguration
+com.finorchestrator.common.exception.GlobalExceptionHandler

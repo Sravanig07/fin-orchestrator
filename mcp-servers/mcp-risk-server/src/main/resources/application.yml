@@ -1,0 +1,25 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: mcp-risk-server
+
+services:
+  risk-service: ${RISK_SERVICE_URL:http://localhost:8085}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{correlationId:-}]"

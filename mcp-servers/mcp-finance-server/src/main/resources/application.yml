@@ -1,0 +1,25 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: mcp-finance-server
+
+services:
+  finance-service: ${FINANCE_SERVICE_URL:http://localhost:8082}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{correlationId:-}]"

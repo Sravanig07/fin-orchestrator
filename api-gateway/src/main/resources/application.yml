@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000
+
+services:
+  user-service: ${USER_SERVICE_URL:http://localhost:8081}
+  finance-service: ${FINANCE_SERVICE_URL:http://localhost:8082}
+  contract-service: ${CONTRACT_SERVICE_URL:http://localhost:8083}
+  document-service: ${DOCUMENT_SERVICE_URL:http://localhost:8084}
+  risk-service: ${RISK_SERVICE_URL:http://localhost:8085}
+  notification-service: ${NOTIFICATION_SERVICE_URL:http://localhost:8086}
+  audit-service: ${AUDIT_SERVICE_URL:http://localhost:8087}
+  ai-orchestrator: ${AI_ORCHESTRATOR_URL:http://localhost:8088}
+
+finorchestrator:
+  jwt:
+    secret: ${JWT_SECRET:SuperSecretFinOrchestratorKeyForJwtGeneration2026!#$}
+    expiration-ms: 86400000
+  gateway:
+    rate-limit:
+      requests-per-minute: 120
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{correlationId:-}]"
